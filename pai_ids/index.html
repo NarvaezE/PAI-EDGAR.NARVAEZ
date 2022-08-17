@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <img src="delivery.png" id="delivery"/>
+    <canvas id="mycanvas" width="500" height="500" >
+        Tu navegador no soporta canvas
+    </canvas>
+    <script type="text/javascript">
+        var cv = document.getElementById('mycanvas');
+        var ctx = cv.getContext('2d')
+        
+        ctx.strokeStyle="red"
+        ctx.strokeRect(0,0,150,150);
+
+        ctx.strokeStyle="blue"
+        ctx.strokeRect(150,150,150,150);
+        
+        ctx.fillStyle = "rgb(200,0,0";
+        ctx.fillRect(10,10,55,50);
+
+        ctx.fillStyle = "rgba(200,0,0.5";
+        ctx.fillRect(30,30,55,50);
+
+
+        ctx.moveTo(0,0);
+        ctx.lineTo(250,250);
+        ctx.stroke();
+
+
+        ctx.moveTo(150,150);
+        ctx.lineTo(300,250);
+        ctx.lineTo(250,300);
+        ctx.lineTo(150,150);
+        ctx.stroke();
+
+
+        var grd = ctx.createLinearGradient(0,0,200,0);
+        grd.addColorStop(0,"red");
+        grd.addColorStop(0.5,"green");
+        grd.addColorStop(1,"blue");
+
+        ctx.fillStyle = grd;
+        ctx.fillRect(0,400,200,80);
+
+        grd =ctx.createRadialGradient(75,50,5,90,60,100);
+        grd.addColorStop(0,"red");
+        grd.addColorStop(1,"blue");
+        grd.addColorStop(0.5,"green");
+
+        ctx.fillStyle = grd;
+        ctx.fillRect(0,40,200,80);
+
+        var img = document.getElementById("delivery");
+        ctx.drawImage(img,100,100);
+        
+        cv.addEventListener("click",function(e){
+            
+            
+            ctx.fillStyle = "rgba(0,0,200,0.5)";
+            ctx.beginPath();
+            ctx.arc(e.offsetX-20,e.offsetY-20,40,0,2*Math.PI);
+            ctx.fill();
+            ctx.strokeStyle = "black";
+            ctx.stroke();
+
+            
+
+
+        });
+
+        //var color 
+        var fig='arc';
+        cv.addEventListener("mouseover",function(e){    
+
+        });
+
+        cv.addEventListener("mouseout",function(e){
+            
+        });
+
+
+        function randomRgbColor() {
+            let r = randomInteger(255);
+            let g = randomInteger(255);
+            let b = randomInteger(255);
+            return [r,g,b];
+        }
+
+
+
+
+    </script>
+</body>
+</html>
