@@ -18,11 +18,35 @@
         Tu navegador no soporta canvas
     </canvas>
     <script type="text/javascript">
-        var cv = document.getElementById('mycanvas');
-        var ctx = cv.getContext('2d')
         
-        
+        var cv = null;
+        var ctx = null;
+        var player1 = null;
+        var superx=240;
+        var supery=240;
+ 
+        function Cuadro(x,y,w,h,c) {
+            this.x = x;
+            this.y = y;
+            this.w = w;
+            this.h = h;
+            this.c = c;
 
+            this.dibujar=function(ctx){
+                ctx.fillStyle =this.c;
+                ctx.fillRect(this.x,this.y,this.w,this.h);
+                ctx.strokeRect(this.x,this.y,this.w,this.h)
+            }
+
+        }
+
+        function start(){
+             cv = document.getElementById('mycanvas');
+             ctx = cv.getContext('2d');
+
+             player1 = new Cuadro(superx,supery,40,40,'red')
+             paint();
+        }
 
         /*var grd = ctx.createLinearGradient(0,0,200,0);
         grd.addColorStop(0,"red");
@@ -47,10 +71,10 @@
 
         //var color 
         
-        
+        /*
         var fig='arc';
         var color='blue';
-
+        var press=true;
         cv.addEventListener("click",function(e){
             
             
@@ -74,17 +98,93 @@
         });
 
         cv.addEventListener("mouseout",function(e){
+            console.log("mousemove");
             fig=(fig=='arc')?'rec':'arc';
         });
 
 
+        cv.addEventListener('mousemove',function(e){
+            console.log(e);
+            
+            if(press){
+                ctx.fillStyle='black';
+                ctx.fillRect(e.offsetX-5,e.offsetY-5,10,10);
+            }
+            
+
+        });
+
+        cv.addEventListener('mousedown',function(e){
+            console.log(e);
+            press = false;
+        });
+
+        cv.addEventListener('mouseup',function(e){
+            console.log(e);
+            press = true;
+        });
+        */
         function colorAleatorio() {
         var o = Math.round, r = Math.random, s = 255;
         return 'rgba(' + o(r()*s) + ',' + o(r()*s) + ',' + o(r()*s) + ',' + r().toFixed(1) + ')';
         }
 
+        
 
+        function paint() {
 
+            window.requestAnimationFrame(paint);
+            ctx.fillStyle = "cyan";
+            ctx.fillRect(0, 0,500,500);
+
+            player1.c=colorAleatorio();
+            player1.dibujar(ctx);
+
+            update();
+            
+        }   
+
+        function update() {
+            player1.x+=10;
+            if(player1.x >500) {
+                player1.x = 0;
+            }
+            player1.y+=10;
+            if(player1.y >500) {
+                player1.y = 0;
+            }
+        }
+
+        window.requestAnimationFrame = (function () {
+            return window.requestAnimationFrame ||
+                window.webkitRequestAnimationFrame ||
+                window.mozRequestAnimationFrame ||
+                function (callback) {
+                    window.setTimeout(callback, 17);
+                };
+        }());
+
+        window.addEventListener('load',start)
+        /*
+        document.addEventListener('keydown', function(e) {
+            console.log(e.keyCode)
+            if(e.keyCode == 87 ){
+                
+                supery-=10;
+            }
+            if(e.keyCode == 83 ){
+                
+                supery+=10;
+            }
+            if(e.keyCode == 65 ){
+                
+                superx-=10;
+            }
+            if(e.keyCode == 68 ){
+                superx+=10;
+            }
+            paint();
+        });*/
     </script>
 </body>
 </html>
