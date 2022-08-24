@@ -8,11 +8,11 @@
 </head>
 <body>
     <canvas width="500" height="500" id="mycanvas"></canvas>
-    
+
     <script type="text/javascript">
         var cv = document.getElementById('mycanvas');
         var ctx = cv.getContext('2d')
-        
+
 
         ctx.fillStyle = "blue";
         ctx.fillRect(0,0,500,500);
@@ -26,6 +26,22 @@
         ctx.arc(200,120,30,0,2*Math.PI);
         ctx.fill();
         ctx.arc(160,100,30,0,2*Math.PI);
+        ctx.fill();
+
+        ctx.fillStyle = "green";
+        ctx.beginPath();
+        ctx.moveTo(0,350);
+        ctx.lineTo(150,120);
+        ctx.lineTo(400,500);
+        ctx.lineTo(0,500);
+        ctx.fill();
+
+        ctx.fillStyle = "green";
+        ctx.beginPath();
+        ctx.moveTo(150,350);
+        ctx.lineTo(400,120);
+        ctx.lineTo(400,500);
+        ctx.lineTo(0,500);
         ctx.fill();
 
         ctx.fillStyle = "yellow";
@@ -49,8 +65,41 @@
         ctx.beginPath();
         ctx.arc(400,280,25,0,2*Math.PI);
         ctx.fill()
-        
+
+        ctx.fillStyle = "brown";
+        ctx.beginPath();
+        ctx.moveTo(55,320);
+        ctx.lineTo(170,220);
+        ctx.lineTo(305,320);
+        ctx.fill();
+
+        ctx.strokeStyle = "cyan";
+        ctx.strokeRect(100,340,40,40);
+
+        ctx.strokeStyle = "cyan";
+        ctx.strokeRect(100,380,40,40);
+
+        ctx.strokeStyle = "cyan";
+        ctx.strokeRect(140,380,40,40);
+
+        ctx.strokeStyle = "cyan";
+        ctx.strokeRect(140,340,40,40);
+
+        ctx.strokeStyle = "orange";
+        ctx.strokeRect(190,420,40,80);
+        ctx.strokeStyle = "orange";
+        ctx.strokeRect(230,420,40,80);
+
+        ctx.fillStyle = "orange";
+        ctx.beginPath();
+        ctx.arc(210,460,8,0,2*Math.PI);
+        ctx.fill();
+
+        ctx.fillStyle = "orange";
+        ctx.beginPath();
+        ctx.arc(250,460,8,0,2*Math.PI);
+        ctx.fill();
         
     </script>
 </body>
-</html>
+</html> 
