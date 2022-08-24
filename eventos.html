@@ -22,8 +22,13 @@
         var cv = null;
         var ctx = null;
         var player1 = null;
+        var player2 = null;
         var superx=240;
         var supery=240;
+        var direction ='left';
+        var score =0;
+        var speed =10;
+
  
         function Cuadro(x,y,w,h,c) {
             this.x = x;
@@ -31,6 +36,26 @@
             this.w = w;
             this.h = h;
             this.c = c;
+
+            this.se_tocan = function (target) { 
+
+                if(this.x < target.x + target.w &&
+
+                this.x + this.w > target.x && 
+
+                this.y < target.y + target.h && 
+
+                this.y + this.h > target.y)
+
+                {
+
+                return true;  
+
+                }  
+
+            };
+
+
 
             this.dibujar=function(ctx){
                 ctx.fillStyle =this.c;
@@ -45,88 +70,13 @@
              ctx = cv.getContext('2d');
 
              player1 = new Cuadro(superx,supery,40,40,'red')
+             player2 = new Cuadro(getRandomInt(500),getRandomInt(500),40,40,'yellow')
              paint();
         }
 
-        /*var grd = ctx.createLinearGradient(0,0,200,0);
-        grd.addColorStop(0,"red");
-        grd.addColorStop(0.5,"green");
-        grd.addColorStop(1,"blue");
-
-        ctx.fillStyle = grd;
-        ctx.fillRect(0,400,200,80);
-
-        grd =ctx.createRadialGradient(75,50,5,90,60,100);
-        grd.addColorStop(0,"red");
-        grd.addColorStop(1,"blue");
-        grd.addColorStop(0.5,"green");
-
-        ctx.fillStyle = grd;
-        ctx.fillRect(0,40,200,80);
-
-        var img = document.getElementById("delivery");
-        ctx.drawImage(img,100,100);*/
-        
-        
-
-        //var color 
-        
-        /*
-        var fig='arc';
-        var color='blue';
-        var press=true;
-        cv.addEventListener("click",function(e){
-            
-            
-            ctx.fillStyle = color;
-            if(fig=='arc'){
-                ctx.beginPath();
-                ctx.arc(e.offsetX-20,e.offsetY-20,40,0,2*Math.PI);
-                ctx.fill();
-                ctx.strokeStyle = "black";
-                ctx.stroke();
-
-            }else{
-                ctx.fillRect(e.offsetX-20,e.offsetY-20,80,80);
-                ctx.strokeRect(e.offsetX-20,e.offsetY-20,80,80 );
-            }
-            
-        });
-
-        cv.addEventListener('mouseover',function(e){
-            color=colorAleatorio();
-        });
-
-        cv.addEventListener("mouseout",function(e){
-            console.log("mousemove");
-            fig=(fig=='arc')?'rec':'arc';
-        });
-
-
-        cv.addEventListener('mousemove',function(e){
-            console.log(e);
-            
-            if(press){
-                ctx.fillStyle='black';
-                ctx.fillRect(e.offsetX-5,e.offsetY-5,10,10);
-            }
-            
-
-        });
-
-        cv.addEventListener('mousedown',function(e){
-            console.log(e);
-            press = false;
-        });
-
-        cv.addEventListener('mouseup',function(e){
-            console.log(e);
-            press = true;
-        });
-        */
         function colorAleatorio() {
-        var o = Math.round, r = Math.random, s = 255;
-        return 'rgba(' + o(r()*s) + ',' + o(r()*s) + ',' + o(r()*s) + ',' + r().toFixed(1) + ')';
+            var o = Math.round, r = Math.random, s = 255;
+            return 'rgba(' + o(r()*s) + ',' + o(r()*s) + ',' + o(r()*s) + ',' + r().toFixed(1) + ')';
         }
 
         
@@ -137,21 +87,75 @@
             ctx.fillStyle = "cyan";
             ctx.fillRect(0, 0,500,500);
 
+            ctx.fillStyle = "black";
+            ctx.fillText('SCORE: '+score+' SPEED: '+speed,30,20);
             player1.c=colorAleatorio();
             player1.dibujar(ctx);
+
+            player2.dibujar(ctx);
 
             update();
             
         }   
 
+        document.addEventListener('keydown', function(e) {
+            console.log(e.keyCode)
+            if(e.keyCode == 87 ){
+                
+                supery-=10;
+                direction='up';
+            }
+            if(e.keyCode == 83 ){
+                
+                supery+=10;
+                direction='down';
+            }
+            if(e.keyCode == 65 ){
+                
+                superx-=10;
+                direction='left';
+            }
+            if(e.keyCode == 68 ){
+                direction='right';
+            }
+            
+        });
+
         function update() {
-            player1.x+=10;
-            if(player1.x >500) {
+            if (direction=='right'){
+                player1.x+=10;
+                if(player1.x >500) {
                 player1.x = 0;
             }
-            player1.y+=10;
-            if(player1.y >500) {
+            }
+            
+            if (direction=='down'){
+                player1.y+=10;
+                if(player1.y >500) {
                 player1.y = 0;
+            }
+            }
+
+            if (direction=='left'){
+                player1.x-=10;
+                if(player1.x <0) {
+                player1.x = 500;
+            }
+            }
+
+            if (direction=='up'){
+                player1.y-=10;
+                if(player1.y <0) {
+                player1.y = 500;
+            }
+            }
+
+            if (player1.se_tocan(player2)){
+                console.log("player")
+                score+=1;
+                speed+=10;
+                player2 = new Cuadro(getRandomInt(500),getRandomInt(500),40,40,'yellow')
+
             }
         }
 
@@ -185,6 +189,9 @@
             }
             paint();
         });*/
+        function getRandomInt(max) {
+            return Math.floor(Math.random() * max);
+        }
     </script>
 </body>
 </html>
