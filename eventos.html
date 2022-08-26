@@ -31,7 +31,10 @@
         var pause =false;
         var walls = [4];
         var avanza = false;
-
+        var monkey = new Image();
+        var banana = new Image();
+        var wall = new Image();
+        var sonidoM = new Audio();
  
         function Cuadro(x,y,w,h,c) {
             this.x = x;
@@ -58,8 +61,6 @@
 
             };
 
-
-
             this.dibujar=function(ctx){
                 ctx.fillStyle =this.c;
                 ctx.fillRect(this.x,this.y,this.w,this.h);
@@ -72,13 +73,19 @@
              cv = document.getElementById('mycanvas');
              ctx = cv.getContext('2d');
             
-             
+            
+
              walls[0]=new Cuadro(170,180,20,80,'gray')
              walls[1]=new Cuadro(170,450,120,20,'gray')
              walls[2]=new Cuadro(170,80,120,20,'gray')
              walls[3]=new Cuadro(450,180,20,80,'gray')
+
+             
              player1 = new Cuadro(superx,supery,20,20,'red')
              player2 = new Cuadro(getRandomInt(500),getRandomInt(500),20,20,'yellow')
+             
+             
+             
              paint();
         }
 
@@ -98,13 +105,19 @@
             ctx.fillStyle = "black";
             ctx.fillText('SCORE: '+score+' SPEED: '+speed,30,20);
             
+            sonidoM.src ='monkysound.mp3';
 
-            player1.dibujar(ctx);
+            monkey.src = 'monkey.png';
+            banana.src = 'platano.png';
+            wall.src = 'wall.png';
 
-            player2.dibujar(ctx);
-
+            ctx.drawImage(monkey,player1.x,player1.y);
+            ctx.drawImage(banana,player2.x,player2.y);
+            
             for (var i = 0; i < walls.length; i++) {
-                walls[i].dibujar(ctx);
+                
+                ctx.drawImage(wall,walls[i].x,walls[i].y,walls[i].w,walls[i].h);
+
                  
             }
             if(pause){
@@ -180,7 +193,7 @@
 
             if (direction=='up'){
                 player1.y-=5;
-                if(player1.y <0) {
+                if(player1.y <0) {ss
                 player1.y = 500;
             }
             }
@@ -191,15 +204,43 @@
                 console.log("player")
                 score+=1;
                 speed+=10;
+                sonidoM.play();
                 player2 = new Cuadro(getRandomInt(500),getRandomInt(500),20,20,'yellow')
 
+                
             }
             for (var i = 0; i < walls.length; i++) {
                 
                 if (player1.se_tocan(walls[i])){
                     console.log("pared");
                     avanza = false;
-                    console.log(avanza);
+                    if (direction=='right'){
+                        player1.x+=5;
+                            if(player1.x >500) {
+                        player1.x = 0;
+                    }
+                }
+            
+                if (direction=='down'){
+                    player1.y+=5;
+                    if(player1.y >500) {
+                        player1.y = 0;
+                    }
+                }
+
+                if (direction=='left'){
+                    player1.x-=5;
+                    if(player1.x <0) {
+                    player1.x = 500;
+                }
+                }
+
+                if (direction=='up'){
+                    player1.y-=5;
+                    if(player1.y <0) {
+                        player1.y = 500;
+                }
+                }
                 }
                 
             }
