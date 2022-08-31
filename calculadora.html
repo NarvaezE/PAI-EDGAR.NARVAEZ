@@ -10,6 +10,38 @@
     
 </script>
     <div id="contenedor">
+
+        <h2>
+            Pro del salon
+
+        </h2>
+        <li v-for="alumno in pleabada">
+            {{ alumno.name }}
+            {{alumno.role}}
+        </li>
+
+        <fieldset>
+            <input type="text" v-model="a_name" a_name="">
+            <input type="text" v-model="role" role="">
+
+            <button @click=addPalomilla()>
+                agregar
+            </button>
+        </fieldset>
+
+        <fieldset   >
+            <input type="text" v-model="age" age="">
+            <h1 v-if="age >= 18">
+                Pasele a pistear
+            </h1>
+            <h1 v-if="age < 18">
+                Fuga pa la casa
+            </h1>
+        </fieldset>
+
+
+
+
         <h1> Hola {{name}} </h1>
         <p>{{lastname}}</p>
         <fieldset>
@@ -49,8 +81,16 @@
                     lastname:'Narvaez',
                     num1:0,
                     num2:0,
-                    resultado:0
-
+                    resultado:0,
+                    age:0,
+                    pleabada:[
+                        {name:'Suzzet' ,role:'Backend'},
+                        {name:'Emmanuel',role:'Frontend'},
+                        {name:'Isaac', role:'Backend'},
+                        {name:'Dara',role:'Backend'}
+                    ],
+                    a_name:"",
+                    role:""
                 }
         },
         methods:{
@@ -59,6 +99,9 @@
             },
             sumar(){
                 this.resultado=this.num1 + this.num2
+            },
+            addPalomilla(){
+                this.pleabada.push({name:this.a_name,role:this.role})
             }
         }
 
