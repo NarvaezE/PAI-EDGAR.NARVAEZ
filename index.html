@@ -7,36 +7,88 @@
     <title>Document</title>
 </head>
 <body>
-    <canvas id="mycanvas" width="500" height="500">
-        Tu navegador no soporta canvas
-    </canvas>
+    <div id="contenedor">
+			
+        <form>
+            <fieldset>
+                <legend>
+                    Datos de acceso
+                </legend>
+
+
+                <label>
+                    Correo electrónico 
+                </label>
+                <input type="email" v-model="email" name="" required>
+
+                <br>
+
+                <label>
+                    Password
+                </label>
+                <input type="password" v-model="password" name="" required>
+
+                <br>
+
+                <button @click="login">
+                    Acceder
+                </button>
+
+            </fieldset>
+        </form>
+
+    </div>
+
+    <script src="https://unpkg.com/vue@3"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script type="text/javascript">
-        var cv = document.getElementById('mycanvas');
-        var ctx = cv.getContext('2d')
-        
-        ctx.strokeStyle="red"
-        ctx.strokeRect(0,0,150,150);
+        const { createApp } = Vue
 
-        ctx.strokeStyle="blue"
-        ctx.strokeRect(150,150,150,150);
-        
-        ctx.fillStyle = "rgb(200,0,0";
-        ctx.fillRect(10,10,55,50);
+        const app = createApp({
+            data(){
+                return{ 
+                    users:null,
+                    email:'',
+                    password:''
+                }
+            },
+            methods:{
+                login(e){
 
-        ctx.fillStyle = "rgba(200,0,0.5";
-        ctx.fillRect(30,30,55,50);
+                    //var axios = require('axios');
+                    //var FormData = require('form-data');
 
+                    var data = new FormData();
+                    data.append('username', this.email);//enarva
+                    data.append('password', this.password);//1234
+                    data.append('request_token', '');
 
-        ctx.moveTo(0,0);
-        ctx.lineTo(250,250);
-        ctx.stroke();
+                    var config = {
+                        method: 'post',
+                        url: 'https://api.themoviedb.org/3/authentication/token/validate_with_login',
+                        headers: { 
+                            'Authorization': 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIwYjYxNGFmMDA4YWZjMGQyMGM3ZGY0Mjk0OTkyZGIxZSIsInN1YiI6IjYzMWE3ZjE5MGZiMzk4MDA4NGM5ZGZlZCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.OikVCk2EOnY8oQs6XJO7q24HzgL5pPy1fp_f1Xrzsk8', 
+                            //...data.getHeaders()
+                        },
+                        data : data
+                    };
 
+                    axios(config)
+                    .then(function (response) {
+                        if(response.data.success) {
+                            window.location.href='movies.html'
+                        }
+                    console.log(JSON.stringify(response.data));
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                        alert('datos incorrectos')
+                    });
 
-        ctx.moveTo(150,150);
-        ctx.lineTo(300,250);
-        ctx.lineTo(250,300);
-        ctx.lineTo(150,150);
-        ctx.stroke();
+                    e.preventDefault()
+                }
+            }
+        }).mount('#contenedor')
 
     </script>
 </body>
