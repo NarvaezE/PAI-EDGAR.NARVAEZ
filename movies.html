@@ -5,20 +5,36 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-</head>
+    
+ </head>
 <body>
     <h1>Movies Main Page</h1>
     <div id="contenedor">
         <!-- Crear una vista principal con cardviews -->
-        <h1>
-            {{movies}}   
-        </h1>
-
-
         
-
+        <div>
+            <div v-for="m in movies" >
+               <!-- <div >
+                 :src="imgPreUrl + 'img/logo.png' -->
+                  <!-- <img v-bind:src="https://image.tmdb.org/t/p/w500/ + m.poster_path" alt=""> 
+               </div> -->
+               
+                <h1 >
+                    {{m.title}}
+                </h1>
+                <h1 >
+                    {{m.release_date}}
+                </h1>
+                <p>
+                    
+                </p>
+                <div>
+                    <button>Read more</button>
+                </div>
+              
+            </div>
+        </div>
     </div>
-    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://unpkg.com/vue@3"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script type="text/javascript">
@@ -36,9 +52,20 @@
                 
 
             },mounted () {
-                axios
-                .get('https://api.themoviedb.org/3/movie/157336?append_to_response=title')
-                .then(response => (this.movies = response.data.overview))
+                var data = new FormData();
+
+                var config = {
+                method: 'get',
+                url: 'https://api.themoviedb.org/3/movie/popular?language=en-US&page=1',
+                headers: { 
+                    'Authorization': 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIwYjYxNGFmMDA4YWZjMGQyMGM3ZGY0Mjk0OTkyZGIxZSIsInN1YiI6IjYzMWE3ZjE5MGZiMzk4MDA4NGM5ZGZlZCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.OikVCk2EOnY8oQs6XJO7q24HzgL5pPy1fp_f1Xrzsk8', 
+                    //...data.getHeaders()
+                },
+                data : data
+                };
+                axios(config)
+                .then(response =>(this.movies=response.data.results))
+                .catch(error => console.log(error))
             }
             
         }).mount('#contenedor')
