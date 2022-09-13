@@ -28,7 +28,6 @@
                                 <h2 class="mt-5">
                                     Rate: {{movies.vote_average}}   Vote count: <small class="text-success"> {{movies.vote_count}}</small>
                                 </h2>
-                                
                                 <button v-if="state=='oculto'" class="btn btn-primary btn-rounded" @click="addRate">Add Rate</button>
                                 <button class="btn btn-primary btn-rounded" @click="deleteRate">Delete Rate</button>
                                 
@@ -111,8 +110,8 @@
                     movies:[],
                     mov_det:null,
                     state:'oculto',
-                    title:'',
-                    value:'',
+                    showRate:'show',
+                    value:null,
                     id:localStorage.getItem("identificador")
                 }
             },
@@ -138,7 +137,8 @@
                     axios(config)
                     .then(function (response) {
                     console.log(JSON.stringify(response.data));
-                        alert("Movie rate has been send successfully")
+                        alert("Movie rate has been send successfully. Your rated this movie - "+r)
+                        console.log(this.value);
                     })
                     .catch(function (error) {
                     console.log(error);
@@ -161,6 +161,7 @@
                     .then(function (response) {
                     console.log(JSON.stringify(response.data));
                         alert("Movie rate has been deleted successfully")
+                        this.value = 0.0
                     })
                     .catch(function (error) {
                     console.log(error);
