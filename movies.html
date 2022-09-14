@@ -63,13 +63,14 @@
             },
             methods:{
                 details(m){
+                    //guarda el id de la pelicula en local storage para usarlo en details.html
                     localStorage.setItem("identificador",m)
                     window.location.href='details.html'
                 }
 
             },mounted () {
                 var data = new FormData();
-
+                //configuracion de metodo, url y header para consumir la api con axios
                 var config = {
                 method: 'get',
                 url: 'https://api.themoviedb.org/3/movie/popular?language=es-ES&page=1',
@@ -80,7 +81,7 @@
                 data : data
                 };
                 axios(config)
-                .then(response =>(this.movies=response.data.results))
+                .then(response =>(this.movies=response.data.results))//le damos en valor del response a nuestro array movies
                 .catch(error => console.log(error))
             }
             

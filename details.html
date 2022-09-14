@@ -111,8 +111,8 @@
                     mov_det:null,
                     state:'oculto',
                     showRate:'show',
-                    value:null,
-                    id:localStorage.getItem("identificador")
+                    value:0.5,
+                    id:localStorage.getItem("identificador") //le damos el valor almacenado en el localStorage a la var id
                 }
             },
             methods:{
@@ -121,9 +121,9 @@
                 },
                 send(r){
                     var data = JSON.stringify({
-                        "value": r
+                        "value": r //mandamos el valor de rate 
                     });
-
+                    //config con metodo post
                     var config = {
                     method: 'post',
                     url: 'https://api.themoviedb.org/3/movie/' + localStorage.getItem("identificador") + '/rating',
@@ -139,6 +139,7 @@
                     console.log(JSON.stringify(response.data));
                         alert("Movie rate has been send successfully. Your rated this movie - "+r)
                         console.log(this.value);
+                        this.value = r
                     })
                     .catch(function (error) {
                     console.log(error);
@@ -148,7 +149,7 @@
 
                 },
                 deleteRate(){
-
+                    //config con metodo delete
                     var config = {
                     method: 'delete',
                     url: 'https://api.themoviedb.org/3/movie/' + localStorage.getItem("identificador") + '/rating',
