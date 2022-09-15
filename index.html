@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <title>MOVIES CRUD VUE</title>
+    <title >Login Movies</title>
     <!-- <link rel="stylesheet" href="style.css"> -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
@@ -16,14 +16,14 @@
             <div class="form-group">
                 <fieldset>
                     <legend>
-                        Datos de acceso
+                        Login
                     </legend>
     
     
                     <label for="correo">
                         Username 
                     </label >
-                    <input class="form-control" id="correo" type="email" v-model="email" name="" required>
+                    <input class="form-control" id="username" type="text" v-model="username" name="" required>
     
                     <br>
     
@@ -53,18 +53,15 @@
             data(){
                 return{ 
                     users:null,
-                    email:'',
+                    username:'',
                     password:''
                 }
             },
             methods:{
                 login(e){
-
-                    //var axios = require('axios');
-                    //var FormData = require('form-data');
-
+                    //formdata con los valores del formulario
                     var data = new FormData();
-                    data.append('username', this.email);//enarva
+                    data.append('username', this.username);//enarva
                     data.append('password', this.password);//1234
                     data.append('request_token', '');
 
