@@ -1,0 +1,24 @@
+//variables less
+@bgColor: #381580;
+
+//mixins less
+.setBackgroundCol(@color){
+  background-color: @color;
+}
+
+.container{
+  fieldset{
+    .setBackgroundCol(green);
+      form{
+        background-color: aquamarine;
+        input{
+          background-color: @bgColor;
+          color: white;
+        }
+        button{
+            background-color: @bgColor;
+            color:white;
+        }
+      }
+  }
+}
